@@ -7,7 +7,8 @@
 
 #include "Task.h"
 
-Task::Task()
+Task::Task(){}
+Task::Task(int machine, int duration) : machine (machine), duration (duration)
 {
 	// TODO Auto-generated constructor stub
 

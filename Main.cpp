@@ -9,6 +9,10 @@
 #include <fstream>
 #include <string>
 #include "JobShop.h"
+#include "Job.h"
+#include "Task.h"
+
+#include <vector>
 int main(int argc, char **argv)
 {
 	int x;
@@ -22,35 +26,35 @@ int main(int argc, char **argv)
 	istrm.open(name);
 
 	JobShop shopA();
-	int eolCounter =0;
+//	shopA.getLongestJob();
+	int eolCounter = 0;
+	std::vector<int> list ={};
 	while (istrm >> x)
 	{
 		if (x == '\0')
-							{
-								std::cout << std::endl;
-								++eolCounter;
-							}
+		{
+			std::cout << std::endl;
+			if (eolCounter != 0){
+//				shopA.AddToJoblist(Job a());
+			}
+
+			++eolCounter;
+
+		}
 		if (eolCounter != 0)
 		{
-			if (counter == 0)
-			{
-				std::cout << "Machine: ";
-				++counter;
-			}
-			if (counter == 1)
-			{
-				std::cout << "Duration: ";
-				counter = 0;
-			}
+			list.push_back(x);
 
-
-			std::cout << x << "\t";
 		}
 
-
 	}
-
 	istrm.close();
 
+
+	for (int i =0; i < list.size(); i = i+2)
+	{
+		Task a(list.at(i), list.at(i + 1));
+
+	}
 	return 0;
 }

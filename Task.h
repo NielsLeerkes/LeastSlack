@@ -13,7 +13,9 @@
 class Task
 {
 public:
+
 	Task();
+	Task(int machine, int duration);
 	virtual ~Task();
 	int getDuration() const;
 	void setDuration(int duration);

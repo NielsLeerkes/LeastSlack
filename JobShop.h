@@ -17,6 +17,7 @@ public:
 	virtual ~JobShop();
 	int getLongestJob() const;
 	void setLongestJob(int longestJob);
+	void AddToJoblist(Job j);
 
 private:
 	int longestJob;

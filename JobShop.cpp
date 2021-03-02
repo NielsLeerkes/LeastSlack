@@ -27,3 +27,8 @@ void JobShop::setLongestJob(int longestJob)
 {
 	this->longestJob = longestJob;
 }
+
+void JobShop::AddToJoblist(Job j)
+{
+	JobList.push_back(j);
+}
