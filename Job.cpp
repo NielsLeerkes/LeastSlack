@@ -18,3 +18,13 @@ Job::~Job()
 	// TODO Auto-generated destructor stub
 }
 
+
+int Job::getTotalDuration() const
+{
+	return totalDuration;
+}
+
+void Job::setTotalDuration(int totalDuration)
+{
+	this->totalDuration = totalDuration;
+}

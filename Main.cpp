@@ -6,10 +6,43 @@
  *
  */
 
-
 #include <iostream>
+#include <fstream>
+#include <string>
 
-int main(int argc, char **argv) {
+#include "JobShop.h"
 
-	std::cout << "Hallo" << std::endl;
+int main(int argc, char **argv)
+{
+	int x;
+	int machineNr;
+	int duration;
+	int isDuration = 0;
+	char name[256];
+	std::cout << "Enter the file name:";
+	std::cin.getline(name, 256);
+	std::cout << name << std::endl;
+	std::ifstream istrm;
+	istrm.open(name);
+
+
+
+	while (istrm >> x)
+	{
+		if (isDuration == 1)
+		{
+			isDuration = 0;
+			machineNr = x;
+		}
+		else
+		{
+
+			isDuration = 1;
+		}
+		std::cout << x << std::endl;
+	}
+
+	istrm.close();
+	return 0;
+
 }

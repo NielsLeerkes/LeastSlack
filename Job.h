@@ -8,11 +8,24 @@
 #ifndef JOB_H_
 #define JOB_H_
 
+#include <vector>
+
+#include "Task.h"
+
 class Job
 {
 public:
 	Job();
 	virtual ~Job();
+
+	int getTotalDuration() const;
+	void setTotalDuration(int totalDuration);
+
+	void addTOJobList();
+
+private:
+	std::vector<Task> jobList = {};
+	int totalDuration;
 };
 
 #endif /* JOB_H_ */

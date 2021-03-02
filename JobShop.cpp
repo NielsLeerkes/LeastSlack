@@ -18,3 +18,12 @@ JobShop::~JobShop()
 	// TODO Auto-generated destructor stub
 }
 
+int JobShop::getLongestJob() const
+{
+	return longestJob;
+}
+
+void JobShop::setLongestJob(int longestJob)
+{
+	this->longestJob = longestJob;
+}
