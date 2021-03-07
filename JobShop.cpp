@@ -7,11 +7,13 @@
 
 #include "JobShop.h"
 
-JobShop::JobShop()
+
+
+JobShop::JobShop(int longsetJob, std::vector<Job> JobList) : longestJob (0),  JobList (JobList)
 {
 	// TODO Auto-generated constructor stub
-
 }
+
 
 JobShop::~JobShop()
 {

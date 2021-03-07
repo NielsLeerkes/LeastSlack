@@ -8,12 +8,12 @@
 #ifndef JOBSHOP_H_
 #define JOBSHOP_H_
 #include <vector>
-
 #include "Job.h"
+
 class JobShop
 {
 public:
-	JobShop();
+	JobShop(int longsetJob, std::vector<Job> JobList);
 	virtual ~JobShop();
 	int getLongestJob() const;
 	void setLongestJob(int longestJob);

@@ -8,6 +8,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <algorithm>
 #include "JobShop.h"
 #include "Job.h"
 #include "Task.h"
@@ -17,7 +18,7 @@ int main(int argc, char **argv)
 {
 	int x;
 	char name[256];
-	int counter;
+
 	std::cout << "Enter the file name:";
 	std::cin.getline(name, 256);
 	std::cout << name << std::endl;
@@ -26,6 +27,7 @@ int main(int argc, char **argv)
 	istrm.open(name);
 
 	JobShop shopA();
+
 //	shopA.getLongestJob();
 	int eolCounter = 0;
 	std::vector<int> list ={};
@@ -35,26 +37,32 @@ int main(int argc, char **argv)
 		{
 			std::cout << std::endl;
 			if (eolCounter != 0){
-//				shopA.AddToJoblist(Job a());
 			}
-
 			++eolCounter;
-
 		}
 		if (eolCounter != 0)
 		{
 			list.push_back(x);
-
 		}
 
 	}
 	istrm.close();
 
-
-	for (int i =0; i < list.size(); i = i+2)
+	std::vector<Task> taskList ={};
+	for (size_t i =0; i < list.size(); i = i+2)
 	{
 		Task a(list.at(i), list.at(i + 1));
+		taskList.push_back(a);
 
 	}
+
+
+
+	auto begin = taskList.begin();
+	auto end = taskList.end();
+	auto print = [](const Task& n) { std::cout << "Machine : " << n.getMachine() << " " << "Duration" << n.getDuration() << std::endl; };
+	std::for_each(begin, end, print);
+
+
 	return 0;
 }
