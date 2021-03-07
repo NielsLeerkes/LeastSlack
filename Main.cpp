@@ -26,43 +26,54 @@ int main(int argc, char **argv)
 	std::ifstream istrm;
 	istrm.open(name);
 
-	JobShop shopA();
-
+//	JobShop shopA;
+//	shopA.getLongestJob();
 //	shopA.getLongestJob();
 	int eolCounter = 0;
-	std::vector<int> list ={};
+	std::vector<int> list =
+	{ };
 	while (istrm >> x)
 	{
 		if (x == '\0')
 		{
-			std::cout << std::endl;
-			if (eolCounter != 0){
+			list.clear();
+
+			std::cout << "list cleared time for a new one" << std::endl;
+			if (eolCounter == 0)
+			{
+				++eolCounter;
 			}
-			++eolCounter;
+			else
+			{
+				std::vector<Task> taskList =
+				{ };
+				for (size_t i = 0; i < list.size(); i = i + 2)
+				{
+					Task a(list.at(i), list.at(i + 1));
+					taskList.push_back(a);
+				}
+				Job jobA = (taskList);
+				std::cout << "total duration job: " << jobA.getTotalDuration() << std::endl;
+
+			}
+
 		}
 		if (eolCounter != 0)
 		{
 			list.push_back(x);
+			std::cout << x << std::endl;
 		}
 
 	}
 	istrm.close();
 
-	std::vector<Task> taskList ={};
-	for (size_t i =0; i < list.size(); i = i+2)
-	{
-		Task a(list.at(i), list.at(i + 1));
-		taskList.push_back(a);
-
-	}
-
-
-
-	auto begin = taskList.begin();
-	auto end = taskList.end();
-	auto print = [](const Task& n) { std::cout << "Machine : " << n.getMachine() << " " << "Duration" << n.getDuration() << std::endl; };
-	std::for_each(begin, end, print);
-
+//	auto begin = taskList.begin();
+//	auto end = taskList.end();
+//	auto print =
+//			[](
+//					const Task &n)
+//					{	std::cout << "Machine : " << n.getMachine() << " " << "Duration " << n.getDuration() << std::endl;};
+//	std::for_each(begin, end, print);
 
 	return 0;
 }

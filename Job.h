@@ -15,12 +15,12 @@
 class Job
 {
 public:
-	Job();
+	Job(std::vector<Task> jobList);
 	virtual ~Job();
 
 	int getTotalDuration() const;
 	void setTotalDuration(int totalDuration);
-
+	int calcTotalDuration(std::vector<Task> jobList);
 	void addTOJobList();
 
 private:
