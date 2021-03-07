@@ -11,16 +11,12 @@
 Job::Job(std::vector<Task> jobList) :
 		jobList(jobList)
 {
-	// TODO Auto-generated constructor stub
 	int totalDuration = 0;
-	std::cout << jobList.size();
 	for (size_t i = 0; i < jobList.size(); ++i)
 	{
 		totalDuration += jobList.at(i).getDuration();
 	}
 	this->totalDuration = totalDuration;
-	std::cout << totalDuration << std::endl;
-
 }
 
 Job::~Job()

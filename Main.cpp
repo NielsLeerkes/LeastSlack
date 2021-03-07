@@ -36,15 +36,15 @@ int main(int argc, char **argv)
 	{
 		if (x == '\0')
 		{
-			list.clear();
+			std::cout << "eolcounter: "<<eolCounter << std::endl;
 
-			std::cout << "list cleared time for a new one" << std::endl;
 			if (eolCounter == 0)
 			{
 				++eolCounter;
 			}
 			else
 			{
+				std::cout << "making list now" << std::endl;
 				std::vector<Task> taskList =
 				{ };
 				for (size_t i = 0; i < list.size(); i = i + 2)
@@ -53,17 +53,20 @@ int main(int argc, char **argv)
 					taskList.push_back(a);
 				}
 				Job jobA = (taskList);
-				std::cout << "total duration job: " << jobA.getTotalDuration() << std::endl;
-
+				std::cout << "total duration job: " << jobA.getTotalDuration()
+						<< std::endl;
+				std::cout << "list cleared time for a new one" << std::endl;
+				list.clear();
 			}
 
 		}
 		if (eolCounter != 0)
 		{
+			std::cout << "adding:" << x << " to the list" << std::endl;
 			list.push_back(x);
-			std::cout << x << std::endl;
-		}
 
+		}
+		std::cout << x << std::endl;
 	}
 	istrm.close();
 
