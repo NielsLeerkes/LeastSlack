@@ -1,10 +1,3 @@
-/*
- * Main.cpp
- *
- *  Created on: 2 mrt. 2021
- *      Author: na_le
- */
-
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -26,14 +19,17 @@ int main(int argc, char **argv)
 	std::cin.getline(name, 256);
 	std::cout << name << std::endl;
 
-	std::string STRING;
+	std::vector<int> helpVector1;
+
+	std::string wholeLine;
 	std::ifstream infile;
 	infile.open(name);
-
+	JobShop shoppie(1);
 	while (!infile.eof()) // To get you all the lines.
 	{
-		getline(infile, STRING); // Saves the line in STRING.
-		std::string s ="yes";
+		getline(infile, wholeLine); // Saves the line in STRING.
+		std::string s = "yes";
+		std::string s2 = "dick";
 		switch (eolCounter)
 		{
 
@@ -41,10 +37,9 @@ int main(int argc, char **argv)
 			std::cout << "titlel:" << std::endl;
 			break;
 		case 1:
-			std::cout << "hoeveel bj hoeveel:" << std::endl;
-			// parse de dingen hier zodat je weet tot hoever hij gaat
+//			std::cout << "hoeveel bj hoeveel:" << std::endl;
 			s = "";
-			for (auto x : STRING)
+			for (auto x : wholeLine)
 			{
 				if (x == ' ')
 				{
@@ -65,9 +60,14 @@ int main(int argc, char **argv)
 						amountOfMachines = tempString;
 					}
 				}
+
 			}
-			std::cout << "amount of job: " << amountOfJob << " amount of machine: "
-					<< amountOfMachines << std::endl;
+			counterForParse = 0;
+			s= "";
+			std::cout << "amount of machines: " << amountOfMachines
+					<< std::endl;
+			std::cout << "amount of jobs: " << amountOfJob << std::endl;
+			counterForParse = 0;
 			break;
 		default:
 			break;
@@ -75,20 +75,45 @@ int main(int argc, char **argv)
 
 		if (eolCounter > 1 && eolCounter < 2 + amountOfJob)
 		{
-			std::cout << "regelnummer " << eolCounter << ": ";
+			s2 = "";
+			for (auto x : wholeLine)
+			{
+				if (x == ' ')
+				{
+
+					int tempString2 = stoi(s2);
+					helpVector1.push_back(tempString2);
+					s2 = "";
+				}
+				else
+				{
+					s2 += x;
+				}
+			}
+			int tempString2 = stoi(s2);
+			helpVector1.push_back(tempString2);
+			s2 = "";
+			std::vector<Task> jobList;
+			for (int i = 0; i < amountOfMachines * 2; i += 2)
+			{
+				Task task(helpVector1.at(i), helpVector1.at(i + 1));
+				jobList.push_back(task);
+			}
+			Job job(jobList);
+			shoppie.AddToJoblist(job);
+			helpVector1.clear();
 		}
-		else if (eolCounter > amountOfJob + 1)
+		if (eolCounter > amountOfJob + 1)
 		{
 			eolCounter = -1;
 			amountOfJob = 0;
 			amountOfMachines = 0;
-			counterForParse = 0;
 		}
-		std::cout << STRING << std::endl; // Prints our STRING.
-
+		std::cout << wholeLine << std::endl; // Prints our STRING.
 		++eolCounter;
-
 	}
+
 	infile.close();
+
 	return 0;
 }
