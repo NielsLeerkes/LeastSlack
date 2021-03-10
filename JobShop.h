@@ -15,9 +15,12 @@ class JobShop
 public:
 	JobShop(int longestJob);
 	virtual ~JobShop();
-	int getLongestJob() const;
+	int calcLongestJob() const;
 	void setLongestJob(int longestJob);
 	void AddToJoblist(Job j);
+	int getLongestJobIndex() const;
+	void makeLeastSlack();
+
 
 private:
 	int longestJob;

@@ -113,6 +113,8 @@ int main(int argc, char **argv)
 		++eolCounter;
 	}
 
+	shoppie.setLongestJob(shoppie.calcLongestJob());
+	shoppie.makeLeastSlack();
 	infile.close();
 
 	return 0;

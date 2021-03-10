@@ -44,3 +44,23 @@ void Job::setTotalDuration(int totalDuration)
 {
 	this->totalDuration = totalDuration;
 }
+
+int Job::getBeginTime() const
+{
+	return beginTime;
+}
+
+void Job::setBeginTime(int beginTime)
+{
+	this->beginTime = beginTime;
+}
+
+int Job::getEndTime() const
+{
+	return endTime;
+}
+
+void Job::setEndTime(int endTime)
+{
+	this->endTime = endTime;
+}
