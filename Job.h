@@ -21,9 +21,7 @@ public:
 	int getTotalDuration() const;
 	void setTotalDuration(int totalDuration);
 	int calcTotalDuration(std::vector<Task> jobList);
-	std::vector<Task> getJobList();
-
-
+	std::vector<Task> getTaskList();
 	void addTOJobList();
 	//begintime
 	int getBeginTime() const;
@@ -31,11 +29,15 @@ public:
 	//endtime
 	int getEndTime() const;
 	void setEndTime(int endTime);
+	//currentTime
+	int getCurrentTime() const;
+	void setCurrentTime(int currentTime);
 
 private:
+	int currentTime;
 	int beginTime;
 	int endTime;
-	std::vector<Task> jobList = {};
+	std::vector<Task> taskList = {};
 	int totalDuration;
 };
 

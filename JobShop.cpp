@@ -26,8 +26,6 @@ int JobShop::calcLongestJob() const
 
 	for (auto x : JobList)
 	{
-		std::cout << "x: " << x.getTotalDuration() << "vs:"
-				<< JobList.at(longestJob).getTotalDuration() << std::endl;
 		if (JobList.at(longestJob).getTotalDuration() < x.getTotalDuration())
 		{
 			longestJob = i;
@@ -56,7 +54,32 @@ void JobShop::AddToJoblist(Job j)
 
 void JobShop::makeLeastSlack()
 {
+	JobList.at(longestJob).setBeginTime(0);
 
-	std::cout << std::endl;
+	JobList.at(longestJob).setCurrentTime(JobList.at(longestJob).getTaskList().at(0).getDuration());
+
+	for(auto x : JobList.at(longestJob).getTaskList())
+	{
+		std::cout << x.getMachine()<< " "<< x.getDuration() <<'\t';
+	}
+	std::cout<<std::endl;
+
+	JobList.at(longestJob).getTaskList().erase(JobList.at(longestJob).getTaskList().begin());
+
+	std::cout << "current time: " << JobList.at(longestJob).getCurrentTime()<< std::endl;
+
+	for(auto x : JobList.at(longestJob).getTaskList())
+	{
+		std::cout << x.getMachine()<< " "<< x.getDuration() <<'\t';
+	}
+	std::cout<<std::endl;
+
+
+	int x = 0;
+	for(auto a : JobList)
+	{
+		std::cout << "index: " << x << " begintime: "<< a.getBeginTime();
+		std::cout << " endtime:  " << a.getEndTime() << std::endl;
+	}
 }
 

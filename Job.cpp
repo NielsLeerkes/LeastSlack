@@ -8,13 +8,12 @@
 #include "Job.h"
 #include <iostream>
 
-Job::Job(std::vector<Task> jobList) :
-		jobList(jobList)
+Job::Job(std::vector<Task> jobList) :currentTime (0),beginTime (0), endTime(0),taskList(jobList)
 {
 	int totalDuration = 0;
-	for (size_t i = 0; i < jobList.size(); ++i)
+	for (auto x : jobList)
 	{
-		totalDuration += jobList.at(i).getDuration();
+		totalDuration += x.getDuration();
 	}
 	this->totalDuration = totalDuration;
 }
@@ -24,15 +23,9 @@ Job::~Job()
 	// TODO Auto-generated destructor stub
 }
 
-int calcTotalDuration(std::vector<Task> jobList)
+std::vector<Task> Job::getTaskList()
 {
-	return 0;
-
-}
-
-std::vector<Task> Job::getJobList()
-{
-	return jobList;
+	return taskList;
 }
 
 int Job::getTotalDuration() const
@@ -63,4 +56,14 @@ int Job::getEndTime() const
 void Job::setEndTime(int endTime)
 {
 	this->endTime = endTime;
+}
+
+int Job::getCurrentTime() const
+{
+	return currentTime;
+}
+
+void Job::setCurrentTime(int currentTime)
+{
+	this->currentTime = currentTime;
 }
