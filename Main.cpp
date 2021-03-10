@@ -8,75 +8,87 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 #include <algorithm>
 #include "JobShop.h"
 #include "Job.h"
 #include "Task.h"
 
-#include <vector>
 int main(int argc, char **argv)
 {
-	int x;
+	signed int eolCounter = 0;
+	int amountOfJob = 0;
+	int amountOfMachines = 0;
+	int counterForParse = 0;
 	char name[256];
 
 	std::cout << "Enter the file name:";
 	std::cin.getline(name, 256);
 	std::cout << name << std::endl;
 
-	std::ifstream istrm;
-	istrm.open(name);
+	std::string STRING;
+	std::ifstream infile;
+	infile.open(name);
 
-//	JobShop shopA;
-//	shopA.getLongestJob();
-//	shopA.getLongestJob();
-	int eolCounter = 0;
-	std::vector<int> list =
-	{ };
-	while (istrm >> x)
+	while (!infile.eof()) // To get you all the lines.
 	{
-		if (x == '\0')
+		getline(infile, STRING); // Saves the line in STRING.
+		std::string s ="yes";
+		switch (eolCounter)
 		{
-			std::cout << "eolcounter: "<<eolCounter << std::endl;
 
-			if (eolCounter == 0)
+		case 0:
+			std::cout << "titlel:" << std::endl;
+			break;
+		case 1:
+			std::cout << "hoeveel bj hoeveel:" << std::endl;
+			// parse de dingen hier zodat je weet tot hoever hij gaat
+			s = "";
+			for (auto x : STRING)
 			{
-				++eolCounter;
-			}
-			else
-			{
-				std::cout << "making list now" << std::endl;
-				std::vector<Task> taskList =
-				{ };
-				for (size_t i = 0; i < list.size(); i = i + 2)
+				if (x == ' ')
 				{
-					Task a(list.at(i), list.at(i + 1));
-					taskList.push_back(a);
+					s = "";
+					++counterForParse;
 				}
-				Job jobA = (taskList);
-				std::cout << "total duration job: " << jobA.getTotalDuration()
-						<< std::endl;
-				std::cout << "list cleared time for a new one" << std::endl;
-				list.clear();
+				else
+				{
+					s += x;
+					if (counterForParse == 0)
+					{
+						int tempString = stoi(s);
+						amountOfJob = tempString;
+					}
+					else
+					{
+						int tempString = stoi(s);
+						amountOfMachines = tempString;
+					}
+				}
 			}
-
+			std::cout << "amount of job: " << amountOfJob << " amount of machine: "
+					<< amountOfMachines << std::endl;
+			break;
+		default:
+			break;
 		}
-		if (eolCounter != 0)
+
+		if (eolCounter > 1 && eolCounter < 2 + amountOfJob)
 		{
-			std::cout << "adding:" << x << " to the list" << std::endl;
-			list.push_back(x);
-
+			std::cout << "regelnummer " << eolCounter << ": ";
 		}
-		std::cout << x << std::endl;
+		else if (eolCounter > amountOfJob + 1)
+		{
+			eolCounter = -1;
+			amountOfJob = 0;
+			amountOfMachines = 0;
+			counterForParse = 0;
+		}
+		std::cout << STRING << std::endl; // Prints our STRING.
+
+		++eolCounter;
+
 	}
-	istrm.close();
-
-//	auto begin = taskList.begin();
-//	auto end = taskList.end();
-//	auto print =
-//			[](
-//					const Task &n)
-//					{	std::cout << "Machine : " << n.getMachine() << " " << "Duration " << n.getDuration() << std::endl;};
-//	std::for_each(begin, end, print);
-
+	infile.close();
 	return 0;
 }
