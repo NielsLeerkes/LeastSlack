@@ -13,7 +13,7 @@
 class JobShop
 {
 public:
-	JobShop(int longsetJob, std::vector<Job> JobList);
+	JobShop(int longestJob);
 	virtual ~JobShop();
 	int getLongestJob() const;
 	void setLongestJob(int longestJob);

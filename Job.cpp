@@ -30,6 +30,11 @@ int calcTotalDuration(std::vector<Task> jobList)
 
 }
 
+std::vector<Task> Job::getJobList()
+{
+	return jobList;
+}
+
 int Job::getTotalDuration() const
 {
 	return totalDuration;

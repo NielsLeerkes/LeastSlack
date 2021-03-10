@@ -9,7 +9,7 @@
 
 
 
-JobShop::JobShop(int longsetJob, std::vector<Job> JobList) : longestJob (0),  JobList (JobList)
+JobShop::JobShop(int longestJob = 0) : longestJob (0)
 {
 	// TODO Auto-generated constructor stub
 }

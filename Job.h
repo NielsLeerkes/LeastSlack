@@ -21,6 +21,7 @@ public:
 	int getTotalDuration() const;
 	void setTotalDuration(int totalDuration);
 	int calcTotalDuration(std::vector<Task> jobList);
+	std::vector<Task> getJobList();
 	void addTOJobList();
 
 private:
