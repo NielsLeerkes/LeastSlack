@@ -1,22 +1,49 @@
-/*
- * JobShop.cpp
- *
- *  Created on: 1 mrt. 2021
- *      Author: na_le
- */
-
 #include "JobShop.h"
 #include <iostream>
+#include <sstream>
 
 JobShop::JobShop(int longestJob = 0) :
-		longestJob(0)
+		longestJob(longestJob)
 {
-	// TODO Auto-generated constructor stub
+	amountOfJobs = 0;
+	amountOfMachines = 0;
 }
 
 JobShop::~JobShop()
 {
-	// TODO Auto-generated destructor stub
+}
+void JobShop::setJobName(std::string name)
+{
+	this->name = name;
+	std::cout << "name of the job: " << this->name << std::endl;
+}
+
+
+std::vector<std::string> JobShop::parseString(const std::string &inputString)
+{
+	std::vector<std::string> split;
+	std::stringstream ss(inputString);
+	std::string item;
+	char delim = ' ';
+	while(getline(ss, item, delim))
+	{
+		split.push_back(item);
+	}
+	return split;	
+}
+
+void JobShop::setJobDetails(const std::string &detailString)
+{
+	std::vector<std::string> split = parseString(detailString);
+	this->amountOfJobs = std::stoi(split.at(0));
+	this->amountOfMachines = std::stoi(split.at(1));
+
+	std::cout << "amound of jobs: " << this->amountOfJobs << " amount of machines: " << this->amountOfMachines << std::endl;
+}
+
+int JobShop::setJobList(std::string input)
+{
+	return 0;
 }
 
 int JobShop::calcLongestJob() const

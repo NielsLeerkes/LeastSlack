@@ -9,7 +9,7 @@
 #define JOB_H_
 
 #include <vector>
-
+#include <string>
 #include "Task.h"
 
 class Job
@@ -34,10 +34,11 @@ public:
 	void setCurrentTime(int currentTime);
 
 private:
+	std::string name;
 	int currentTime;
 	int beginTime;
 	int endTime;
-	std::vector<Task> taskList = {};
+	std::vector<Task> taskList;
 	int totalDuration;
 };
 
