@@ -23,8 +23,6 @@ int main(int argc, char **argv)
 	std::cout << name << std::endl;
 	parseFile(name);
 
-	std::vector<int> helpVector1;
-
 	shoppie.setLongestJob(shoppie.calcLongestJob());
 	shoppie.makeLeastSlack();
 
@@ -41,10 +39,12 @@ void parseFile(std::string filename)
 	while (!infile.eof()) // To get you all the lines.
 	{
 		getline(infile, line); // Saves the line in STRING.
+		// std::cout <<lineNr <<" raw: "<< line <<std::endl;
 		if(line.size() == 0)
-		{
-			std::cout << "end of job" << std::endl;
-			lineNr= -2;
+		{		
+			shoppie.printJobShop();
+			shoppie.clearJobShop();
+			lineNr= -3;
 		}
 		if(lineNr== -2)
 		{

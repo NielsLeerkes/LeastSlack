@@ -23,18 +23,19 @@ public:
 	int getLongestJobIndex() const;
 	void makeLeastSlack();
 
+	void clearJobShop();
 	std::vector<std::string> parseString(const std::string &inputString);	
 	void setJobName(std::string name);
 	void setJobDetails(const std::string &detailString);
-	int setJobList(std::string input);
-
+	int setJobList(const std::string &input);
+	void printJobShop();
 
 private:
 	int amountOfMachines;
 	int amountOfJobs;
 	std::string name;
 	int longestJob;
-	std::vector<Job> JobList;
+	std::vector<Job> jobList;
 };
 
 #endif /* JOBSHOP_H_ */
