@@ -8,7 +8,7 @@
 #include "Task.h"
 void parseFile(std::string);
 
-JobShop shoppie(1);
+JobShop shoppie(0);
 
 int main(int argc, char **argv)
 {
@@ -22,8 +22,6 @@ int main(int argc, char **argv)
 	std::cin.getline(name, 256);
 	std::cout << name << std::endl;
 	parseFile(name);
-
-	shoppie.setLongestJob(shoppie.calcLongestJob());
 	shoppie.makeLeastSlack();
 
 	return 0;
@@ -42,7 +40,9 @@ void parseFile(std::string filename)
 		// std::cout <<lineNr <<" raw: "<< line <<std::endl;
 		if(line.size() == 0)
 		{		
-			shoppie.printJobShop();
+			shoppie.calcLongestJob();
+			shoppie.schedule();
+			// shoppie.printJobShop();
 			shoppie.clearJobShop();
 			lineNr= -3;
 		}

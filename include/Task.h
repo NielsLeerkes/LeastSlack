@@ -15,16 +15,22 @@ class Task
 public:
 
 	Task();
-	Task(int machine, int duration);
+	Task(int machine, int duration,int id);
+	Task(const Task& otherTaks);
+	Task operator=(const Task& task);
 	virtual ~Task();
 	int getDuration() const;
 	void setDuration(int duration);
 	int getMachine() const;
 	void setMachine(int machine);
+	int getId() const;
+	void reduceDuration();
 
 private:
+	int id;
 	int machine;
 	int duration;
+	bool finished;
 
 };
 

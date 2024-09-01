@@ -6,17 +6,43 @@
  */
 
 #include "Task.h"
+#include <iostream>
 
-Task::Task(){}
-Task::Task(int machine, int duration) : machine (machine), duration (duration)
+Task::Task()
 {
-	// TODO Auto-generated constructor stub
+	machine = 0;
+	duration = 0;
+	duration = 0;
+	finished = true;
+}
 
+Task::Task(int machine, int duration, int id) : machine (machine), duration (duration), id (id)
+{
+	finished = false;
 }
 
 Task::~Task()
 {
-	// TODO Auto-generated destructor stub
+}
+Task::Task(const Task& otherTask)
+{
+	this->id = otherTask.id;
+	this->machine = otherTask.machine;
+	this->duration = otherTask.duration;
+	this->finished = otherTask.finished;
+}
+Task Task::operator=(Task const& newTask)
+{
+	this->id = newTask.id;
+	this->machine = newTask.machine;
+	this->duration = newTask.duration;
+
+	return *this;
+}
+
+void Task::reduceDuration()
+{
+	this->duration = duration-1;
 }
 
 int Task::getDuration() const
@@ -37,4 +63,9 @@ int Task::getMachine() const
 void Task::setMachine(int machine)
 {
 	this->machine = machine;
+}
+
+int Task::getId() const
+{
+	return id;
 }

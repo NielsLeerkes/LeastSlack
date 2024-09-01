@@ -8,7 +8,7 @@
 #include "Job.h"
 #include <iostream>
 
-Job::Job(std::vector<Task> jobList) :currentTime (0),beginTime (0), endTime(0),taskList(jobList)
+Job::Job(std::vector<Task> jobList) :beginTime (0), endTime(0),taskList(jobList)
 {
 	int totalDuration = 0;
 	for (auto x : jobList)
@@ -16,11 +16,35 @@ Job::Job(std::vector<Task> jobList) :currentTime (0),beginTime (0), endTime(0),t
 		totalDuration += x.getDuration();
 	}
 	this->totalDuration = totalDuration;
+	isRunning = false;
 }
 
 Job::~Job()
 {
 	// TODO Auto-generated destructor stub
+}
+
+Job::Job(const Job& otherJob)
+{
+	this->name = otherJob.name;
+	this->beginTime = otherJob.beginTime;
+	this->endTime = otherJob.endTime;
+	this->taskList = otherJob.taskList;
+	this->totalDuration = otherJob.totalDuration;
+	this->isRunning = otherJob.isRunning;
+
+}
+Job Job::operator=(Job const& otherJob)
+{
+	this->name = otherJob.name;
+	this->beginTime = otherJob.beginTime;
+	this->endTime = otherJob.endTime;
+	this->taskList = otherJob.taskList;
+	this->totalDuration = otherJob.totalDuration;
+	this->isRunning = otherJob.isRunning;
+
+
+	return *this;
 }
 
 std::vector<Task> Job::getTaskList()
@@ -58,12 +82,26 @@ void Job::setEndTime(int endTime)
 	this->endTime = endTime;
 }
 
-int Job::getCurrentTime() const
+void Job::setRunningStatus(bool newStatus)
 {
-	return currentTime;
+	this->isRunning = newStatus;
 }
 
-void Job::setCurrentTime(int currentTime)
+bool Job::getRunningStatus()
 {
-	this->currentTime = currentTime;
+	return this->isRunning;
+}
+
+void Job::setTaskList(std::vector<Task> taskList)
+{
+	this->taskList = taskList;
+}
+
+void Job::printJob()
+{
+	for(auto task : taskList)
+	{
+		std::cout << "(" << task.getMachine() << " " << task.getDuration() << ")";
+	}
+	std::cout << std::endl;
 }
