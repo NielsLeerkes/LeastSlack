@@ -8,7 +8,7 @@
 #include "Job.h"
 #include <iostream>
 
-Job::Job(std::vector<Task> jobList) :beginTime (0), endTime(0),taskList(jobList)
+Job::Job(std::vector<Task> jobList) :beginTime (-1), endTime(0),taskList(jobList)
 {
 	int totalDuration = 0;
 	for (auto x : jobList)
@@ -17,6 +17,8 @@ Job::Job(std::vector<Task> jobList) :beginTime (0), endTime(0),taskList(jobList)
 	}
 	this->totalDuration = totalDuration;
 	isRunning = false;
+	begon = false;
+	isDone = false;
 }
 
 Job::~Job()
@@ -32,6 +34,8 @@ Job::Job(const Job& otherJob)
 	this->taskList = otherJob.taskList;
 	this->totalDuration = otherJob.totalDuration;
 	this->isRunning = otherJob.isRunning;
+	this->begon = otherJob.begon;
+	this->isDone = otherJob.isDone;
 
 }
 Job Job::operator=(Job const& otherJob)
@@ -42,8 +46,8 @@ Job Job::operator=(Job const& otherJob)
 	this->taskList = otherJob.taskList;
 	this->totalDuration = otherJob.totalDuration;
 	this->isRunning = otherJob.isRunning;
-
-
+	this->begon = otherJob.begon;
+	this->isDone = otherJob.isDone;
 	return *this;
 }
 
@@ -104,4 +108,19 @@ void Job::printJob()
 		std::cout << "(" << task.getMachine() << " " << task.getDuration() << ")";
 	}
 	std::cout << std::endl;
+}
+
+bool Job::isBegon()
+{
+	return begon;
+}
+
+void Job::setDone()
+{
+	isDone = true;
+}
+
+bool Job::getDoneStatus()
+{
+	return isDone;
 }

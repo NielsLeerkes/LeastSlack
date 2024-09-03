@@ -32,6 +32,7 @@ void JobShop::setJobName(std::string name)
 
 void JobShop::printJobShop()
 {
+	// printActiveMachineList();
 	std::cout << "===================================================" << std::endl;
 	std::cout << "Job name: " << this->name <<std::endl;
 	std::cout << "amount of jobs: " << this->amountOfJobs <<std::endl << "Amount of machines: " << this-> amountOfMachines << std::endl;
@@ -43,10 +44,12 @@ void JobShop::printJobShop()
 		{
 		 	std::cout << "(id: " << this->jobList.at(i).getTaskList().at(y).getId()<< " "<<this->jobList.at(i).getTaskList().at(y).getMachine() << " " << this->jobList.at(i).getTaskList().at(y).getDuration()<< "), "; 
 		}
-		std::cout << "; total duration = "<< this->jobList.at(i).getTotalDuration() << std::endl;
+		std::cout << "; total duration = "<< this->jobList.at(i).getTotalDuration()<< " begin time : " << jobList.at(i).getBeginTime()<< std::endl;
+		std::cout << "is active : " << jobList.at(i).getRunningStatus() << std::endl; 
 		std::cout<< ::std::endl;
 	}
 	std::cout << "Longest job at index: " << longestJob << std::endl;
+	std::cout << "current time = " << currentTime << std::endl;
 	std::cout << "===================================================" << std::endl<<std::endl;
 
 }
@@ -151,8 +154,12 @@ void JobShop::AddToJoblist(Job j)
 
 void JobShop::activateJob(int jobNr)
 {
-	jobList.at(jobNr).setRunningStatus(true);
-	activeMachines.push_back(jobList.at(jobNr).getTaskList().at(0).getMachine());
+	if(jobList.at(jobNr).getBeginTime() == -1)
+	{
+		jobList.at(jobNr).setBeginTime(currentTime);
+	}
+		jobList.at(jobNr).setRunningStatus(true);
+		activeMachines.push_back(jobList.at(jobNr).getTaskList().at(0).getMachine());
 }
 
 void JobShop::printActiveMachineList()
@@ -167,40 +174,64 @@ void JobShop::printActiveMachineList()
 
 void JobShop::schedule()
 {
-	jobList.at(longestJob).setBeginTime(0);
-	activateJob(longestJob);
+	// jobList.at(longestJob).setBeginTime(0);
+	// activateJob(longestJob);
 	int loops = 0;
-	while(loops < 70)
+	while( loops < 78)
+	// while(!finished)
 	{
 		int index = 0;
-		for(auto jobs : jobList)
+		for(int jobNr = 0; jobNr < amountOfJobs; ++jobNr)
 		{
-			printActiveMachineList();
-			//check if the job can be activated.
-			int machineNr = jobs.getTaskList().at(0).getMachine();
-			std::cout << "checking for the following machine nr: "<< machineNr << std::endl;
-			if(!checkRunningMachine(machineNr))
+			std::cout << "current jobnr: "<< jobNr <<std::endl;
+			std::cout << "done status: " << jobList.at(jobNr).getDoneStatus() << std::endl;
+			if(!jobList.at(jobNr).getDoneStatus())
 			{
-				activateJob(index);
-				std::cout<< "machine: " << jobs.getTaskList().at(0).getMachine() << " not running:)"<<std::endl;
-			}
-			if(jobs.getRunningStatus())
-			{
-				if(jobs.getTaskList().at(0).getDuration() > 0)
+				//check if the job can be activated.
+				int machineNr = jobList.at(jobNr).getTaskList().at(0).getMachine();
+				// printActiveMachineList();
+				std::cout << "checking for the following machine nr: "<< machineNr << std::endl; 
+				if(!checkRunningMachine(machineNr) && !jobList.at(jobNr).getRunningStatus())
 				{
-					tick(jobs,index);
-				}else{
-					removeFirstInLine(jobs,index);
-					jobs.setRunningStatus(false);
-				}  
-			}
-			// std::cout<< "index: " <<index << std::endl;
+					if(checkForFasterMachines(machineNr,jobList.at(jobNr)))
+					// {
+						activateJob(jobNr);
+					// }
+					// std::cout<< "machine: " << jobs.getTaskList().at(0).getMachine() << " not running:)"<<std::endl;
+				}
+				if(jobList.at(jobNr).getRunningStatus())
+				{
+					if(jobList.at(jobNr).getTaskList().at(0).getDuration() > 0)
+					{
+						tick(jobList.at(jobNr),jobNr);
+					}else{
+						// std::cout << "removing at index: " << index << std::endl;
+						removeFirstInLine(jobList.at(jobNr),jobNr);
+						jobList.at(jobNr).setRunningStatus(false);
+						// printActiveMachineList();
+						finished = finishCheck();
+					}  
+				}
 			++index;
+			}
 		}
 		index=0;
+		printJobShop();
 		++loops;
+		++currentTime;
 	}
-	printJobShop();
+}
+
+bool JobShop::finishCheck()
+{
+	for(auto job : jobList)
+	{
+		if(job.getRunningStatus())
+		{
+			return false;
+		}
+	}
+	return true;
 }
 
 bool JobShop::checkRunningMachine(int machineNr)
@@ -216,16 +247,37 @@ bool JobShop::checkRunningMachine(int machineNr)
 	return false;
 }
 
+bool JobShop::checkForFasterMachines(int machineNr, Job currentJob){
+	for(auto job : jobList)
+	{
+		std::cout <<"checking for the following machine nr: " << machineNr << " and the following machine number at job " << job.getTaskList().at(0).getMachine() << std::endl; 
+		if(job.getTaskList().at(0).getMachine() == machineNr)
+		{
+			std::cout << "my duration = " << currentJob.getTotalDuration() << "other current duration = " << job.getTotalDuration() << std::endl;
+			if(currentJob.getTotalDuration() < job.getTotalDuration())
+			{
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
 void JobShop::removeFirstInLine(Job job,int index)
 {
-	std::vector<Task> helperList;
-	helperList =job.getTaskList();
-	int machineNr = helperList.at(0).getMachine();
-	removeFromActiveMachineList(machineNr);
-	helperList.erase(helperList.begin());
-	Job j = job;
-	j.setTaskList(helperList);
-	jobList.at(index) =j;
+	if(job.getTaskList().size() > 0)
+	{
+		std::vector<Task> helperList;
+		helperList =job.getTaskList();
+		int machineNr = helperList.at(0).getMachine();
+		removeFromActiveMachineList(machineNr);
+		helperList.erase(helperList.begin());
+		Job j = job;
+		j.setTaskList(helperList);
+		jobList.at(index) =j;
+	}else{
+		jobList.at(index).setDone();
+	}
 }
 
 void JobShop::removeFromActiveMachineList(int machineNr)
@@ -249,7 +301,6 @@ void JobShop::removeFromActiveMachineList(int machineNr)
 
 void JobShop::tick(Job job,int index)
 {
-	++currentTime;
 	Task currentTask = job.getTaskList().at(0);
 	currentTask.reduceDuration();
 	std::vector<Task> helperList;

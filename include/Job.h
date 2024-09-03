@@ -37,8 +37,11 @@ public:
 
 	std::vector<Task> getTaskList();
 	void setTaskList(std::vector<Task> taskList);
-
+	bool isBegon();
 	void printJob();
+
+	void setDone();
+	bool getDoneStatus();
 
 private:
 	std::string name;
@@ -47,6 +50,8 @@ private:
 	std::vector<Task> taskList;
 	int totalDuration;
 	bool isRunning;
+	bool isDone;
+	bool begon;
 };
 
 #endif /* JOB_H_ */

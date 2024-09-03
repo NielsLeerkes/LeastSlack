@@ -30,7 +30,8 @@ public:
 	bool checkRunningMachine(int machineNr);
 	void removeFromActiveMachineList(int machineNr);
 	void printActiveMachineList();
-
+	bool checkForFasterMachines(int machieNr,Job job);
+	bool finishCheck();
 private:
 	int amountOfMachines;
 	int amountOfJobs;
