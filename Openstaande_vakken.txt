@@ -1,0 +1,19 @@
+Openstaande vakken
+
+OSM SO:
+Least slack		:?		
+
+OSM MO:
+Toets			: 31-10-2024
+Analyse en ontwerp	: 08-11-2024
+
+IoT TE:
+Toets			: 07-11-2024
+BP			: 08-11-2024
+
+PS 2?
+
+Robots:
+OpenCV			: 27-09-2024
+Toets:			: 17-10-2024
+Kinematica		: 01-11-2024
